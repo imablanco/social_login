@@ -32,6 +32,8 @@ class FacebookPermissions {
   static const EMAIL = "email";
   static const PUBLIC_PROFILE = "public_profile";
 
+  static const DEFAULT = [EMAIL, PUBLIC_PROFILE];
+
   FacebookPermissions._();
 }
 

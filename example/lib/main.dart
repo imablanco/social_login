@@ -14,8 +14,8 @@ class _MyAppState extends State<MyApp> {
   static const GOOGLE_WEB_CLIENT_ID =
       "371639311724-bsao7n8qbod70ubdidg93gbshhp251j8.apps.googleusercontent.com";
 
-  SocialUser _socialUser;
-  String _errorMessage = "Waiting";
+  SocialUser _facebookUser;
+  SocialUser _googleUser;
 
   @override
   void initState() {
@@ -23,30 +23,81 @@ class _MyAppState extends State<MyApp> {
     socialLogin.setConfig(SocialConfig(
       googleWebClientId: GOOGLE_WEB_CLIENT_ID,
     ));
-
-    socialLogin.logInGoogle().then((socialUser) {
-      setState(() {
-        _socialUser = socialUser;
-      });
-    }, onError: (e) {
-      setState(() {
-        _errorMessage = "Error";
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: const Text('Plugin example app'),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('SocialLogin example app'),
         ),
-        body: new Center(
-          child:
-              new Text(_socialUser != null ? _socialUser.email : _errorMessage),
+        body: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                RaisedButton(
+                  onPressed: logInFacebook,
+                  child: Text("LogInFacebok"),
+                ),
+                SocialUserDetail(_facebookUser)
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                RaisedButton(
+                  onPressed: logInGoogle,
+                  child: Text("LogInGoogle"),
+                ),
+                SocialUserDetail(_googleUser)
+              ],
+            )
+          ],
         ),
       ),
+    );
+  }
+
+  Future<void> logInFacebook() async {
+    try {
+      _facebookUser = await socialLogin
+          .logInFacebookWithPermissions(FacebookPermissions.DEFAULT);
+      setState(() {});
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> logInGoogle() async {
+    try {
+      _googleUser = await socialLogin.logInGoogle();
+      setState(() {});
+    } catch (e) {
+      print(e);
+    }
+  }
+}
+
+class SocialUserDetail extends StatelessWidget {
+  final SocialUser _socialUser;
+
+  static const String DEFAULT_IMAGE_URL =
+      "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
+
+  SocialUserDetail(this._socialUser);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Image.network(
+          _socialUser?.pictureUrl ?? DEFAULT_IMAGE_URL,
+          height: 60.0,
+          width: 60.0,
+        ),
+        Text(_socialUser?.email ?? "-")
+      ],
     );
   }
 }
