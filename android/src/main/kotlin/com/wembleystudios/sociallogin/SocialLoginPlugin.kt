@@ -11,10 +11,19 @@ import io.flutter.plugin.common.PluginRegistry.Registrar
 
 @Suppress("UNCHECKED_CAST")
 class SocialLoginPlugin(private val activity: Activity) : MethodCallHandler,
-    PluginRegistry.ActivityResultListener {
+    PluginRegistry.ActivityResultListener, SocialConfigOwner {
+
+    override val socialConfig: SocialConfig
+        get() = backingSocialConfig
+
+    private var backingSocialConfig: SocialConfig = SocialConfig.EMPTY
 
     private val facebookHandler: FacebookHandler by lazy {
         FacebookHandler()
+    }
+
+    private val googleHandler: GoogleHandler by lazy {
+        GoogleHandler(this)
     }
 
     companion object {
@@ -29,33 +38,52 @@ class SocialLoginPlugin(private val activity: Activity) : MethodCallHandler,
 
     override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
+            Constants.METHOD_SET_CONFIG -> {
+                backingSocialConfig =
+                        (call.arguments as? Map<*, *>)?.let { SocialConfig.fromMap(it) } ?:
+                        SocialConfig.EMPTY
+            }
             Constants.METHOD_LOGIN_FACEBOOK -> {
                 facebookHandler.logInWithReadPermissions(
                     activity,
                     call.arguments as List<String>
                 ) { socialUser, throwable ->
-                    when {
-                        socialUser == null && throwable == null ->
-                            result.error(
-                                Constants.METHOD_CODE_ERROR,
-                                Constants.FACEBOOK_ERROR_USER_CANCELED,
-                                null
-                            )
-                        socialUser != null -> result.success(socialUser.topMap())
-                        throwable != null -> result.error(
-                            Constants.METHOD_CODE_ERROR,
-                            throwable.message,
-                            throwable
-                        )
-                    }
+                    handleSocialLoginResponse(result, socialUser, throwable)
+                }
+            }
+            Constants.METHOD_LOGIN_GOOGLE -> {
+                googleHandler.login(activity) { socialUser, throwable ->
+                    handleSocialLoginResponse(result, socialUser, throwable)
                 }
             }
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
-        facebookHandler.onActivityResult(requestCode, resultCode, data)
-        return false
+        return facebookHandler.onActivityResult(requestCode, resultCode, data)
+                || googleHandler.onActivityResult(requestCode, resultCode, data)
+
+    }
+
+    private fun handleSocialLoginResponse(
+        result: Result,
+        socialUser: SocialUser?,
+        throwable: Throwable?
+    ) {
+        when {
+            socialUser == null && throwable == null ->
+                result.error(
+                    Constants.METHOD_CODE_ERROR,
+                    Constants.METHOD_ERROR_USER_CANCELED,
+                    null
+                )
+            socialUser != null -> result.success(socialUser.topMap())
+            throwable != null -> result.error(
+                Constants.METHOD_CODE_ERROR,
+                throwable.message,
+                throwable
+            )
+        }
     }
 
 }

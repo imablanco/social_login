@@ -42,4 +42,5 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.facebook.android:facebook-android-sdk:4.19.0'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
 }

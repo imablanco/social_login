@@ -69,9 +69,8 @@ class FacebookHandler {
         LoginManager.getInstance().logInWithReadPermissions(activity, permissions)
     }
 
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) =
         callbackManager.onActivityResult(requestCode, resultCode, data)
-    }
 
     private fun getProfilePicture(jsonObject: JSONObject): String? {
         val pictureJson = jsonObject.getJSONObject(ME_REQUEST_RESPONSE_PICTURE)
