@@ -35,8 +35,7 @@ class FacebookHandler {
                                     it.getString(ME_REQUEST_RESPONSE_EMAIL),
                                     it.getString(ME_REQUEST_RESPONSE_NAME),
                                     getProfilePicture(it),
-                                    result.accessToken?.token,
-                                    null
+                                    mapOf(Constants.FACEBOOK_TOKEN to result.accessToken?.token)
                                 )
                             }, null
                         )

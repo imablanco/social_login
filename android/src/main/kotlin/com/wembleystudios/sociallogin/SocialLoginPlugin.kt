@@ -36,9 +36,17 @@ class SocialLoginPlugin(private val activity: Activity) : MethodCallHandler,
                 ) { socialUser, throwable ->
                     when {
                         socialUser == null && throwable == null ->
-                            result.error("400", Constants.FACEBOOK_ERROR_USER_CANCELED, null)
+                            result.error(
+                                Constants.METHOD_CODE_ERROR,
+                                Constants.FACEBOOK_ERROR_USER_CANCELED,
+                                null
+                            )
                         socialUser != null -> result.success(socialUser.topMap())
-                        throwable != null -> result.error("400", throwable.message, throwable)
+                        throwable != null -> result.error(
+                            Constants.METHOD_CODE_ERROR,
+                            throwable.message,
+                            throwable
+                        )
                     }
                 }
             }

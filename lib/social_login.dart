@@ -12,14 +12,13 @@ class SocialLogin {
       ChannelMethods.LOGIN_FACEBOOK,
       permissions,
     );
-    return SocialUser.fromMap(response);
+    return FacebookUser.fromMap(response);
   }
 }
 
 class FacebookPermissions {
   static const EMAIL = "email";
   static const PUBLIC_PROFILE = "public_profile";
-  static const FRIENDS = "user_friends";
 
   FacebookPermissions._();
 }
@@ -30,31 +29,34 @@ class ChannelMethods {
   ChannelMethods._();
 }
 
-class SocialUser {
+abstract class SocialUser {
   final String id;
   final String email;
   final String name;
   final String pictureUrl;
+
+  SocialUser(this.id, this.email, this.name, this.pictureUrl);
+}
+
+class FacebookUser extends SocialUser {
   final String token;
-  final String idToken;
 
-  SocialUser(
-    this.id,
-    this.email,
-    this.name,
-    this.pictureUrl,
+  FacebookUser(
+    String id,
+    String email,
+    String name,
+    String pictureUrl,
     this.token,
-    this.idToken,
-  );
+  ) : super(id, email, name, pictureUrl);
 
-  factory SocialUser.fromMap(Map<dynamic, dynamic> map) {
-    return SocialUser(
+  factory FacebookUser.fromMap(Map map) {
+    final extraMap = map['extra_data'] as Map;
+    return FacebookUser(
       map['id'],
       map['email'],
       map['name'],
       map['picture_url'],
-      map['token'],
-      map['id_token'],
+      extraMap['facebook_token'],
     );
   }
 }
