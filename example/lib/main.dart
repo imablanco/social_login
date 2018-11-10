@@ -23,6 +23,18 @@ class _MyAppState extends State<MyApp> {
     socialLogin.setConfig(SocialConfig(
       googleWebClientId: GOOGLE_WEB_CLIENT_ID,
     ));
+
+    socialLogin.getCurrentFacebookUser().then((user){
+      setState(() {
+        _facebookUser = user;
+      });
+    });
+
+    socialLogin.getCurrentGoogleUser().then((user){
+      setState(() {
+        _googleUser = user;
+      });
+    });
   }
 
   @override
@@ -34,23 +46,33 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                RaisedButton(
-                  onPressed: logInFacebook,
-                  child: Text("LogInFacebok"),
-                ),
-                SocialUserDetail(_facebookUser)
-              ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: <Widget>[
+                  getFacebookButton(),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: SocialUserDetail(_facebookUser),
+                    ),
+                  )
+                ],
+              ),
             ),
-            Row(
-              children: <Widget>[
-                RaisedButton(
-                  onPressed: logInGoogle,
-                  child: Text("LogInGoogle"),
-                ),
-                SocialUserDetail(_googleUser)
-              ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: <Widget>[
+                  getGoogleButton(),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: SocialUserDetail(_googleUser),
+                    ),
+                  )
+                ],
+              ),
             )
           ],
         ),
@@ -68,6 +90,16 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  Future<void> logOutFacebook() async {
+    try {
+      await socialLogin.logOutFacebook();
+      _facebookUser = null;
+      setState(() {});
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<void> logInGoogle() async {
     try {
       _googleUser = await socialLogin.logInGoogle();
@@ -75,6 +107,38 @@ class _MyAppState extends State<MyApp> {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<void> logOutGoogle() async {
+    try {
+      await socialLogin.logOutGoogle();
+      _googleUser = null;
+      setState(() {});
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Widget getFacebookButton() {
+    final action = _facebookUser == null ? logInFacebook : logOutFacebook;
+    final text = _facebookUser == null ? "Login FB" : "Logout FB";
+    return RaisedButton(
+      textColor: Colors.white,
+      color: Colors.blue,
+      onPressed: action,
+      child: Text(text),
+    );
+  }
+
+  Widget getGoogleButton() {
+    final action = _googleUser == null ? logInGoogle : logOutGoogle;
+    final text = _googleUser == null ? "Login G" : "Logout G";
+    return RaisedButton(
+      textColor: Colors.white,
+      color: Colors.red,
+      onPressed: action,
+      child: Text(text),
+    );
   }
 }
 
@@ -96,7 +160,12 @@ class SocialUserDetail extends StatelessWidget {
           height: 60.0,
           width: 60.0,
         ),
-        Text(_socialUser?.email ?? "-")
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text(_socialUser?.email ?? "-"),
+          ),
+        )
       ],
     );
   }

@@ -32,9 +32,22 @@ class GoogleHandler(private val socialConfigOwner: SocialConfigOwner) {
         }
     }
 
+    fun getCurrentUser(activity: Activity): SocialUser? =
+        GoogleSignIn.getLastSignedInAccount(activity)?.toSocialUser()
+
+    fun logOut(activity: Activity, callback: () -> Unit) {
+        GoogleSignIn.getClient(activity, GoogleSignInOptions.Builder().build())
+            .signOut()
+            .addOnCompleteListener { callback() }
+    }
+
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
         if (requestCode != RC_SIGN_IN) {
             return false
+        }
+        if (resultCode == Activity.RESULT_CANCELED) {
+            onLoginResult?.invoke(null, null)
+            return true
         }
         try {
             val account =

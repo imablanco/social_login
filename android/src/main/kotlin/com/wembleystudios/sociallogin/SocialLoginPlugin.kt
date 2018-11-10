@@ -51,10 +51,31 @@ class SocialLoginPlugin(private val activity: Activity) : MethodCallHandler,
                     handleSocialLoginResponse(result, socialUser, throwable)
                 }
             }
+            Constants.METHOD_GET_CURRENT_USER_FACEBOOK -> {
+                facebookHandler.getCurrentUserProfile { socialUser, throwable ->
+                    handleSocialLoginResponse(result, socialUser, throwable)
+                }
+            }
+            Constants.METHOD_LOGOUT_FACEBOOK -> {
+                facebookHandler.logOut()
+                result.success(null)
+            }
             Constants.METHOD_LOGIN_GOOGLE -> {
                 googleHandler.login(activity) { socialUser, throwable ->
                     handleSocialLoginResponse(result, socialUser, throwable)
                 }
+            }
+            Constants.METHOD_GET_CURRENT_USER_GOOGLE -> {
+                googleHandler.getCurrentUser(activity)?.let {
+                    result.success(it.topMap())
+                } ?: result.error(
+                    Constants.METHOD_CODE_ERROR,
+                    Constants.METHOD_ERROR_GOOGLE_NOT_LOGGED_USER,
+                    null
+                )
+            }
+            Constants.METHOD_LOGOUT_GOOGLE -> {
+                googleHandler.logOut(activity) { result.success(null) }
             }
         }
     }
@@ -81,7 +102,7 @@ class SocialLoginPlugin(private val activity: Activity) : MethodCallHandler,
             throwable != null -> result.error(
                 Constants.METHOD_CODE_ERROR,
                 throwable.message,
-                throwable
+                null
             )
         }
     }

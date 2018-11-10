@@ -22,9 +22,29 @@ class SocialLogin {
     return FacebookUser.fromMap(response);
   }
 
+  Future<FacebookUser> getCurrentFacebookUser() async {
+    final response =
+        await _channel.invokeMethod(ChannelMethods.GET_CURRENT_USER_FACEBOOK);
+    return FacebookUser.fromMap(response);
+  }
+
+  Future<void> logOutFacebook() async {
+    return await _channel.invokeMethod(ChannelMethods.LOGOUT_FACEBOOK);
+  }
+
   Future<GoogleUser> logInGoogle() async {
     final response = await _channel.invokeMethod(ChannelMethods.LOGIN_GOOGLE);
     return GoogleUser.fromMap(response);
+  }
+
+  Future<GoogleUser> getCurrentGoogleUser() async {
+    final response =
+        await _channel.invokeMethod(ChannelMethods.GET_CURRENT_USER_GOOGLE);
+    return GoogleUser.fromMap(response);
+  }
+
+  Future<void> logOutGoogle() async {
+    return await _channel.invokeMethod(ChannelMethods.LOGOUT_GOOGLE);
   }
 }
 
@@ -40,7 +60,11 @@ class FacebookPermissions {
 class ChannelMethods {
   static const SET_CONFIG = "set_config";
   static const LOGIN_FACEBOOK = "login_facebook";
+  static const GET_CURRENT_USER_FACEBOOK = "get_current_user_facebook";
+  static const LOGOUT_FACEBOOK = "logout_facebook";
   static const LOGIN_GOOGLE = "login_google";
+  static const GET_CURRENT_USER_GOOGLE = "get_current_user_google";
+  static const LOGOUT_GOOGLE = "logout_google";
 
   ChannelMethods._();
 }
