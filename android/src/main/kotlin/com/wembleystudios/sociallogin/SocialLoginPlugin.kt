@@ -26,6 +26,10 @@ class SocialLoginPlugin(private val activity: Activity) : MethodCallHandler,
         GoogleHandler(this)
     }
 
+    private val twitterHandler: TwitterHandler by lazy {
+        TwitterHandler(activity, this)
+    }
+
     companion object {
         @JvmStatic
         fun registerWith(registrar: Registrar) {
@@ -70,12 +74,26 @@ class SocialLoginPlugin(private val activity: Activity) : MethodCallHandler,
                     result.success(it.topMap())
                 } ?: result.error(
                     Constants.METHOD_CODE_ERROR,
-                    Constants.METHOD_ERROR_GOOGLE_NOT_LOGGED_USER,
+                    Constants.METHOD_ERROR_NOT_LOGGED_USER,
                     null
                 )
             }
             Constants.METHOD_LOGOUT_GOOGLE -> {
                 googleHandler.logOut(activity) { result.success(null) }
+            }
+            Constants.METHOD_LOGIN_TWITTER -> {
+                twitterHandler.login(activity) { socialUser, throwable ->
+                    handleSocialLoginResponse(result, socialUser, throwable)
+                }
+            }
+            Constants.METHOD_GET_CURRENT_USER_TWITTER -> {
+                twitterHandler.getCurrentUser { socialUser, throwable ->
+                    handleSocialLoginResponse(result, socialUser, throwable)
+                }
+            }
+            Constants.METHOD_LOGOUT_TWITTER -> {
+                twitterHandler.logOut()
+                result.success(null)
             }
         }
     }

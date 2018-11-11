@@ -49,7 +49,7 @@ class FacebookHandler(context: Context, socialConfigOwner: SocialConfigOwner) {
         AccessToken.getCurrentAccessToken()?.let {
             fetchUserProfile(it, callback)
         } ?: run {
-            callback(null, NO_USER_LOGGED_IN_ERROR)
+            callback(null, Constants.NO_USER_LOGGED_EXCEPTION)
         }
     }
 
@@ -114,7 +114,5 @@ class FacebookHandler(context: Context, socialConfigOwner: SocialConfigOwner) {
         private const val ME_REQUEST_RESPONSE_PICTURE = "picture"
         private const val ME_REQUEST_RESPONSE_DATA = "data"
         private const val ME_REQUEST_RESPONSE_URL = "url"
-
-        private val NO_USER_LOGGED_IN_ERROR = FacebookException("No user logged in")
     }
 }
