@@ -1,6 +1,7 @@
 package com.wembleystudios.sociallogin
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.facebook.*
@@ -12,7 +13,7 @@ import org.json.JSONObject
  * Created by Álvaro Blanco Cabrero on 09/11/2018.
  * android.
  */
-class FacebookHandler {
+class FacebookHandler(context: Context, socialConfigOwner: SocialConfigOwner) {
 
     private val callbackManager: CallbackManager by lazy {
         CallbackManager.Factory.create()
@@ -39,6 +40,8 @@ class FacebookHandler {
     }
 
     init {
+        FacebookSdk.setApplicationId(socialConfigOwner.socialConfig.facebookAppId)
+        FacebookSdk.sdkInitialize(context.applicationContext)
         LoginManager.getInstance().registerCallback(callbackManager, callback)
     }
 

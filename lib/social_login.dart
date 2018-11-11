@@ -71,11 +71,16 @@ class ChannelMethods {
 
 class SocialConfig {
   static const KEY_GOOGLE_WEB_CLIENT_ID = "google_web_client_id";
+  static const KEY_FACEBOOK_APP_ID = "facebook_app_id";
+  final String facebookAppId;
   final String googleWebClientId;
 
-  SocialConfig({this.googleWebClientId});
+  SocialConfig({this.facebookAppId, this.googleWebClientId});
 
-  Map toMap() => {KEY_GOOGLE_WEB_CLIENT_ID: googleWebClientId};
+  Map toMap() => {
+        KEY_FACEBOOK_APP_ID: facebookAppId,
+        KEY_GOOGLE_WEB_CLIENT_ID: googleWebClientId
+      };
 }
 
 class UserFields {

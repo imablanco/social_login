@@ -11,6 +11,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final SocialLogin socialLogin = SocialLogin();
 
+  static const FACEBOOK_APP_ID = "2249712475303378";
   static const GOOGLE_WEB_CLIENT_ID =
       "371639311724-bsao7n8qbod70ubdidg93gbshhp251j8.apps.googleusercontent.com";
 
@@ -21,16 +22,17 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     socialLogin.setConfig(SocialConfig(
+      facebookAppId: FACEBOOK_APP_ID,
       googleWebClientId: GOOGLE_WEB_CLIENT_ID,
     ));
 
-    socialLogin.getCurrentFacebookUser().then((user){
+    socialLogin.getCurrentFacebookUser().then((user) {
       setState(() {
         _facebookUser = user;
       });
     });
 
-    socialLogin.getCurrentGoogleUser().then((user){
+    socialLogin.getCurrentGoogleUser().then((user) {
       setState(() {
         _googleUser = user;
       });

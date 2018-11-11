@@ -19,7 +19,7 @@ class SocialLoginPlugin(private val activity: Activity) : MethodCallHandler,
     private var backingSocialConfig: SocialConfig = SocialConfig.EMPTY
 
     private val facebookHandler: FacebookHandler by lazy {
-        FacebookHandler()
+        FacebookHandler(activity, this)
     }
 
     private val googleHandler: GoogleHandler by lazy {
