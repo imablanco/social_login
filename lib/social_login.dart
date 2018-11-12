@@ -46,6 +46,21 @@ class SocialLogin {
   Future<void> logOutGoogle() async {
     return await _channel.invokeMethod(ChannelMethods.LOGOUT_GOOGLE);
   }
+
+  Future<TwitterUser> logInTwitter() async {
+    final response = await _channel.invokeMethod(ChannelMethods.LOGIN_TWITTER);
+    return TwitterUser.fromMap(response);
+  }
+
+  Future<TwitterUser> getCurrentTwitterUser() async {
+    final response =
+        await _channel.invokeMethod(ChannelMethods.GET_CURRENT_USER_TWITTER);
+    return TwitterUser.fromMap(response);
+  }
+
+  Future<void> logOutTwitter() async {
+    return await _channel.invokeMethod(ChannelMethods.LOGOUT_TWITTER);
+  }
 }
 
 class FacebookPermissions {
@@ -65,6 +80,9 @@ class ChannelMethods {
   static const LOGIN_GOOGLE = "login_google";
   static const GET_CURRENT_USER_GOOGLE = "get_current_user_google";
   static const LOGOUT_GOOGLE = "logout_google";
+  static const LOGIN_TWITTER = "login_twitter";
+  static const GET_CURRENT_USER_TWITTER = "get_current_user_twitter";
+  static const LOGOUT_TWITTER = "logout_twitter";
 
   ChannelMethods._();
 }
@@ -72,14 +90,25 @@ class ChannelMethods {
 class SocialConfig {
   static const KEY_GOOGLE_WEB_CLIENT_ID = "google_web_client_id";
   static const KEY_FACEBOOK_APP_ID = "facebook_app_id";
+  static const KEY_TWITTER_CONSUMER = "twitter_consumer";
+  static const KEY_TWITTER_SECRET = "twitter_secret";
   final String facebookAppId;
   final String googleWebClientId;
+  final String twitterConsumer;
+  final String twitterSecret;
 
-  SocialConfig({this.facebookAppId, this.googleWebClientId});
+  SocialConfig({
+    this.facebookAppId,
+    this.googleWebClientId,
+    this.twitterConsumer,
+    this.twitterSecret,
+  });
 
   Map toMap() => {
         KEY_FACEBOOK_APP_ID: facebookAppId,
-        KEY_GOOGLE_WEB_CLIENT_ID: googleWebClientId
+        KEY_GOOGLE_WEB_CLIENT_ID: googleWebClientId,
+        KEY_TWITTER_CONSUMER: twitterConsumer,
+        KEY_TWITTER_SECRET: twitterSecret,
       };
 }
 
@@ -92,6 +121,8 @@ class UserFields {
   static const FACEBOOK_TOKEN = "facebook_token";
   static const GOOGLE_TOKEN = "google_token";
   static const GOOGLE_ID_TOKEN = "google_id_token";
+  static const TWITTER_TOKEN = "twitter_token";
+  static const TWITTER_TOKEN_SECRET = "twitter_token_secret";
 
   UserFields._();
 }
@@ -150,6 +181,32 @@ class GoogleUser extends SocialUser {
       map[UserFields.PICTURE_URL],
       extraMap[UserFields.GOOGLE_TOKEN],
       extraMap[UserFields.GOOGLE_ID_TOKEN],
+    );
+  }
+}
+
+class TwitterUser extends SocialUser {
+  final String token;
+  final String tokenSecret;
+
+  TwitterUser(
+    String id,
+    String email,
+    String name,
+    String pictureUrl,
+    this.token,
+    this.tokenSecret,
+  ) : super(id, email, name, pictureUrl);
+
+  factory TwitterUser.fromMap(Map map) {
+    final extraMap = map[UserFields.EXTRA_DATA] as Map;
+    return TwitterUser(
+      map[UserFields.ID],
+      map[UserFields.EMAIL],
+      map[UserFields.NAME],
+      map[UserFields.PICTURE_URL],
+      extraMap[UserFields.TWITTER_TOKEN],
+      extraMap[UserFields.TWITTER_TOKEN_SECRET],
     );
   }
 }

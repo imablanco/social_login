@@ -64,7 +64,7 @@ class TwitterHandler(context: Context, socialConfigOwner: SocialConfigOwner) {
     fun logOut() = TwitterCore.getInstance().sessionManager.clearActiveSession()
 
 
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Boolean {
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
         if (requestCode == twitterAuthClient.requestCode) {
             twitterAuthClient.onActivityResult(requestCode, resultCode, data)
             return true

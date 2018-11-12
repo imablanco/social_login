@@ -14,9 +14,13 @@ class _MyAppState extends State<MyApp> {
   static const FACEBOOK_APP_ID = "2249712475303378";
   static const GOOGLE_WEB_CLIENT_ID =
       "371639311724-bsao7n8qbod70ubdidg93gbshhp251j8.apps.googleusercontent.com";
+  static const TWITTER_CONSUMER_KEY = "LfNAorWdEOHjjz3ugRd3v3Fyu";
+  static const TWITTER_CONSUMER_SECRET =
+      "fomJMRxC1XzqLYTaFLqEcknLqfuJBG6naIS1BL3Umma4t4I6et";
 
   SocialUser _facebookUser;
   SocialUser _googleUser;
+  SocialUser _twitterUser;
 
   @override
   void initState() {
@@ -24,6 +28,8 @@ class _MyAppState extends State<MyApp> {
     socialLogin.setConfig(SocialConfig(
       facebookAppId: FACEBOOK_APP_ID,
       googleWebClientId: GOOGLE_WEB_CLIENT_ID,
+      twitterConsumer: TWITTER_CONSUMER_KEY,
+      twitterSecret: TWITTER_CONSUMER_SECRET,
     ));
 
     socialLogin.getCurrentFacebookUser().then((user) {
@@ -35,6 +41,12 @@ class _MyAppState extends State<MyApp> {
     socialLogin.getCurrentGoogleUser().then((user) {
       setState(() {
         _googleUser = user;
+      });
+    });
+
+    socialLogin.getCurrentTwitterUser().then((user) {
+      setState(() {
+        _twitterUser = user;
       });
     });
   }
@@ -71,6 +83,20 @@ class _MyAppState extends State<MyApp> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: SocialUserDetail(_googleUser),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: <Widget>[
+                  getTwitterButton(),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: SocialUserDetail(_twitterUser),
                     ),
                   )
                 ],
@@ -121,12 +147,31 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  Future<void> logInTwitter() async {
+    try {
+      _twitterUser = await socialLogin.logInTwitter();
+      setState(() {});
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> logOutTwitter() async {
+    try {
+      await socialLogin.logOutTwitter();
+      _twitterUser = null;
+      setState(() {});
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Widget getFacebookButton() {
     final action = _facebookUser == null ? logInFacebook : logOutFacebook;
     final text = _facebookUser == null ? "Login FB" : "Logout FB";
     return RaisedButton(
       textColor: Colors.white,
-      color: Colors.blue,
+      color: Colors.indigoAccent,
       onPressed: action,
       child: Text(text),
     );
@@ -138,6 +183,17 @@ class _MyAppState extends State<MyApp> {
     return RaisedButton(
       textColor: Colors.white,
       color: Colors.red,
+      onPressed: action,
+      child: Text(text),
+    );
+  }
+
+  Widget getTwitterButton() {
+    final action = _twitterUser == null ? logInTwitter : logOutTwitter;
+    final text = _twitterUser == null ? "Login Tw" : "Logout TW";
+    return RaisedButton(
+      textColor: Colors.white,
+      color: Colors.lightBlueAccent,
       onPressed: action,
       child: Text(text),
     );
