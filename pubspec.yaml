@@ -2,7 +2,7 @@ name: social_login
 description: A social login plugin
 version: 0.0.2
 author: Wembley Studios <developers@wembleystudios.com>
-homepage: http://www.wembleystudios.com/
+homepage: https://github.com/imablanco/social_login
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
