@@ -119,7 +119,6 @@ class UserFields {
   static const PICTURE_URL = "picture_url";
   static const EXTRA_DATA = "extra_data";
   static const FACEBOOK_TOKEN = "facebook_token";
-  static const GOOGLE_TOKEN = "google_token";
   static const GOOGLE_ID_TOKEN = "google_id_token";
   static const TWITTER_TOKEN = "twitter_token";
   static const TWITTER_TOKEN_SECRET = "twitter_token_secret";
@@ -160,7 +159,6 @@ class FacebookUser extends SocialUser {
 }
 
 class GoogleUser extends SocialUser {
-  final String token;
   final String idToken;
 
   GoogleUser(
@@ -168,7 +166,6 @@ class GoogleUser extends SocialUser {
     String email,
     String name,
     String pictureUrl,
-    this.token,
     this.idToken,
   ) : super(id, email, name, pictureUrl);
 
@@ -179,7 +176,6 @@ class GoogleUser extends SocialUser {
       map[UserFields.EMAIL],
       map[UserFields.NAME],
       map[UserFields.PICTURE_URL],
-      extraMap[UserFields.GOOGLE_TOKEN],
       extraMap[UserFields.GOOGLE_ID_TOKEN],
     );
   }
