@@ -8,6 +8,7 @@
 
 import UIKit
 
+import FacebookCore
 
 class FacebookHandler: NSObject {
     

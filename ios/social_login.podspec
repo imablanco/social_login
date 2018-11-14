@@ -17,5 +17,6 @@ A social login plugin
   s.dependency 'Flutter'
 
   s.ios.deployment_target = '8.0'
+  s.dependency 'FacebookCore'
 end
 
