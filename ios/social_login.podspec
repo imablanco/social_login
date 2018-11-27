@@ -18,5 +18,7 @@ A social login plugin
 
   s.ios.deployment_target = '8.0'
   s.dependency 'FacebookCore'
+  s.dependency 'FacebookLogin'
+  s.dependency 'FacebookShare'
 end
 

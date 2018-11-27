@@ -9,14 +9,11 @@
     <list default="true" id="fef98ecf-a4f0-4335-9d97-c463bcc7a5ad" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/social_login/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/social_login/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/social_login/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/social_login/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/social_login/example/ios/Runner/Handlers/FacebookHandler.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/social_login/example/ios/Runner/Handlers/GoogleHandler.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/social_login/example/ios/Runner/Handlers/TwitterHandler.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Runner/Handlers/FacebookHandler.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Runner/Handlers/GoogleHandler.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Runner/Handlers/TwitterHandler.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/social_login/ios/Classes/Handlers/FacebookHandler.swift" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/social_login/ios/Classes/Handlers/FacebookHandler.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/social_login/ios/social_login.podspec" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/social_login/ios/social_login.podspec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Runner/AppDelegate.swift" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner/AppDelegate.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Classes/Handlers/FacebookHandler.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/Handlers/FacebookHandler.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/social_login.podspec" beforeDir="false" afterPath="$PROJECT_DIR$/ios/social_login.podspec" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -34,15 +31,18 @@
     <session id="-1030144625">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="3" />
+          <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.15" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.open.time.17" value="1" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Dart" value="1" />
-          <entry key="Kotlin" value="24" />
-          <entry key="PLAIN_TEXT" value="4" />
+          <entry key="Kotlin" value="25" />
+          <entry key="PLAIN_TEXT" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -50,8 +50,8 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="dart" value="1" />
-          <entry key="kt" value="24" />
-          <entry key="m" value="1" />
+          <entry key="kt" value="25" />
+          <entry key="m" value="2" />
           <entry key="swift" value="3" />
         </counts>
       </usages-collector>
@@ -60,19 +60,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
+        <entry file="file://$PROJECT_DIR$/ios/Classes/SocialLoginPlugin.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1249">
-              <caret line="25" column="16" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
+            <state relative-caret-position="120">
+              <caret line="8" selection-start-line="8" selection-end-line="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ios/Classes/SwiftSocialLoginPlugin.swift">
+        <entry file="file://$PROJECT_DIR$/android/src/main/kotlin/com/wembleystudios/sociallogin/FacebookHandler.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="14" selection-start-line="14" selection-end-line="14" />
+            <state relative-caret-position="768">
+              <caret line="105" selection-start-line="105" selection-end-line="105" />
             </state>
           </provider>
         </entry>
@@ -101,10 +101,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="8" />
-    <option name="y" value="23" />
-    <option name="width" value="1597" />
-    <option name="height" value="977" />
+    <option name="x" value="66" />
+    <option name="y" value="24" />
+    <option name="width" value="1280" />
+    <option name="height" value="777" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -112,6 +112,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="ProjectPane">
@@ -165,7 +166,6 @@
         </subPane>
         <option name="show-excluded-files" value="false" />
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -224,9 +224,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="8" y="23" width="1597" height="977" extended-state="0" />
+    <frame x="66" y="24" width="1280" height="777" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20514469" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2907916" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Build Variants" order="3" side_tool="true" />
@@ -237,7 +238,7 @@
       <window_info id="UI Designer" order="8" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.42485875" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.42481753" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -348,13 +349,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/android/src/main/kotlin/com/wembleystudios/sociallogin/FacebookHandler.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="15" column="6" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/android/src/main/kotlin/com/wembleystudios/sociallogin/GoogleHandler.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -404,9 +398,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ios/Classes/SocialLoginPlugin.m">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1249">
@@ -418,6 +409,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ios/Classes/SocialLoginPlugin.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/src/main/kotlin/com/wembleystudios/sociallogin/FacebookHandler.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="768">
+          <caret line="105" selection-start-line="105" selection-end-line="105" />
         </state>
       </provider>
     </entry>
