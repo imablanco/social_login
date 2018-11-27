@@ -24,12 +24,12 @@ public class SwiftSocialLoginPlugin: NSObject, FlutterPlugin {
     
     switch call.method {
         
-    case Method.LOGIN_FACEBOOK.rawValue:
-        
+    case Method.LOGIN_FACEBOOK.rawValue:        
+        FacebookHandler.logInFacebookWithPermissions(permissions: [], result:result)
         break
         
     case Method.LOGOUT_FACEBOOK.rawValue:
-        
+        FacebookHandler.logOutFacebook()
         break
         
     case Method.LOGIN_GOOGLE.rawValue:

@@ -8,6 +8,7 @@
 
 import UIKit
 
+import Flutter
 import FBSDKCoreKit
 import FBSDKLoginKit
 
@@ -25,7 +26,30 @@ class FacebookHandler: NSObject {
     
     
     // MARK: Methods
-    class func logoutFromFacebook() {
+    class func logInFacebookWithPermissions(permissions: [Any]?, result: @escaping FlutterResult) {
+        let login = FBSDKLoginManager.init()
+        login.logIn(withReadPermissions: permissions, from: UIApplication.shared.keyWindow?.rootViewController) { (fbresult, error) in
+            
+            if error != nil {
+                result (false)
+                return
+            }
+            
+            if let bool = fbresult?.isCancelled, bool == true {
+                result (false)
+                return
+            }
+            
+            if (fbresult?.token) != nil {
+                result (true)
+                return
+            }
+            
+            result(false)
+        }
+    }
+    
+    class func logOutFacebook() {
         FBSDKLoginManager().logOut()
         FBSDKAccessToken.setCurrent(nil)
         FBSDKProfile.setCurrent(nil)
