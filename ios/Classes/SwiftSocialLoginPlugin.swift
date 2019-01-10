@@ -39,7 +39,7 @@ public class SwiftSocialLoginPlugin: NSObject, FlutterPlugin {
         
     case Method.LOGIN_FACEBOOK.rawValue:
         
-        if let permissions = call.arguments as? [Any] {
+        if let permissions = call.arguments as? [String] {
             FacebookHandler.logInFacebookWithPermissions(permissions: permissions, result:result)
         }
         

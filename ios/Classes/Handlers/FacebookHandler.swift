@@ -30,26 +30,33 @@ class FacebookHandler {
         FBSDKSettings.setAppID(facebookAppID)
     }
         
-    class func logInFacebookWithPermissions(permissions: [Any], result: @escaping FlutterResult) {
-        let login = FBSDKLoginManager.init()
-        login.logIn(withReadPermissions: permissions, from: UIApplication.shared.keyWindow?.rootViewController) { (fbresult, error) in
+    class func logInFacebookWithPermissions(permissions: [String], result: @escaping FlutterResult) {
+        
+        let sequence = Set(permissions)
+        
+        if let currentPermissions = FBSDKAccessToken.current()?.permissions, currentPermissions.isSubset(of: sequence) {
             
-            if error != nil {
-                result (false)
-                return
+        } else {
+            let login = FBSDKLoginManager.init()
+            login.logIn(withReadPermissions: permissions, from: UIApplication.shared.keyWindow?.rootViewController) { (fbresult, error) in
+                
+                if error != nil {
+                    result (false)
+                    return
+                }
+                
+                if let bool = fbresult?.isCancelled, bool == true {
+                    result (false)
+                    return
+                }
+                
+                if (fbresult?.token) != nil {
+                    result (true)
+                    return
+                }
+                
+                result(false)
             }
-            
-            if let bool = fbresult?.isCancelled, bool == true {
-                result (false)
-                return
-            }
-            
-            if (fbresult?.token) != nil {
-                result (true)
-                return
-            }
-            
-            result(false)
         }
     }
     
