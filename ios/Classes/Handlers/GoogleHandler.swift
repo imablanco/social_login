@@ -8,6 +8,6 @@
 
 import UIKit
 
-class GoogleHandler: NSObject {
+class GoogleHandler {
 
 }

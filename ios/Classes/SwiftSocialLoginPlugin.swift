@@ -3,6 +3,7 @@ import UIKit
 
 
 enum Method: String {
+    case SET_CONFIG = "set_config"
     case LOGIN_FACEBOOK = "login_facebook"
     case LOGOUT_FACEBOOK = "logout_facebook"
     case LOGIN_GOOGLE = "login_google"
@@ -14,7 +15,7 @@ enum Method: String {
 
 public class SwiftSocialLoginPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "social_login", binaryMessenger: registrar.messenger())
+    let channel = FlutterMethodChannel(name: "com.wembleystudios.social_login", binaryMessenger: registrar.messenger())
     let instance = SwiftSocialLoginPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
@@ -24,8 +25,24 @@ public class SwiftSocialLoginPlugin: NSObject, FlutterPlugin {
     
     switch call.method {
         
-    case Method.LOGIN_FACEBOOK.rawValue:        
-        FacebookHandler.logInFacebookWithPermissions(permissions: [], result:result)
+    case Method.SET_CONFIG.rawValue:
+        
+        if let properties = call.arguments as? [String : Any] {
+            SocialConfigHandler.configuration(properties: properties)
+            
+            if let fbAppId = SocialConfigHandler.shareInstance.facebookAppId {
+                FacebookHandler.configuration(facebookAppID: fbAppId)
+            }
+        }
+        
+        break
+        
+    case Method.LOGIN_FACEBOOK.rawValue:
+        
+        if let permissions = call.arguments as? [Any] {
+            FacebookHandler.logInFacebookWithPermissions(permissions: permissions, result:result)
+        }
+        
         break
         
     case Method.LOGOUT_FACEBOOK.rawValue:

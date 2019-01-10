@@ -9,6 +9,6 @@
 import UIKit
 
 
-class TwitterHandler: NSObject {
+class TwitterHandler {
 
 }

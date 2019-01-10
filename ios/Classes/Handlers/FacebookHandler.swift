@@ -12,7 +12,7 @@ import Flutter
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class FacebookHandler: NSObject {
+class FacebookHandler {
     
     // MARK: Constants
     private static let ME_REQUEST_PARAM_FIELDS_KEY = "fields"
@@ -26,7 +26,11 @@ class FacebookHandler: NSObject {
     
     
     // MARK: Methods
-    class func logInFacebookWithPermissions(permissions: [Any]?, result: @escaping FlutterResult) {
+    class func configuration(facebookAppID: String) {
+        FBSDKSettings.setAppID(facebookAppID)
+    }
+        
+    class func logInFacebookWithPermissions(permissions: [Any], result: @escaping FlutterResult) {
         let login = FBSDKLoginManager.init()
         login.logIn(withReadPermissions: permissions, from: UIApplication.shared.keyWindow?.rootViewController) { (fbresult, error) in
             
