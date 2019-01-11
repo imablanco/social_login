@@ -34,7 +34,7 @@ class FacebookHandler {
         
         let sequence = Set(permissions)
         
-        if let currentPermissions = FBSDKAccessToken.current()?.permissions, currentPermissions.isSubset(of: sequence) {
+        if FBSDKAccessToken.current() != nil {
             
         } else {
             let login = FBSDKLoginManager.init()
