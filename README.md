@@ -4,6 +4,9 @@
 
 A Flutter plugin to authenticate to social networks
 
+# ARCHIVED
+This repo is no longer below active development as the iOS implementation can not be handled at this time.
+
 ## Usage
 To use this plugin, add `social_login` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
 
